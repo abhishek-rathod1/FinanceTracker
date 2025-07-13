@@ -1,6 +1,6 @@
 .signup-wrapper{
     width: 70%;
-    max-width: 600px;
+    max-width: 450px;
     height: auto;
     box-shadow: var(--shadow);
     border-radius: 1rem;
@@ -18,4 +18,12 @@
 
 .special{
     color: var(--theme);
+}
+
+.input-para{
+    text-align: center;
+}
+
+.acc{
+    cursor: pointer;
 }

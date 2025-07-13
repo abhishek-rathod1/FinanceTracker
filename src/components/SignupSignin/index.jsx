@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import "./styles.css";
 import InputComponent from "../Input";
+import Button from "../Button";
+
 const SignupSigninComponent = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
+
+  function signupUsingEmailPass() {
+    alert("signup email pass");
+  }
+  function signupUsingGoogle() {
+    alert("signup Google");
+  }
+
   return (
     <div className="signup-wrapper">
       <h2 className="title">
@@ -40,8 +50,21 @@ const SignupSigninComponent = () => {
           placeholder={"John@Ey78y$%^"}
           type={"password"}
         />
+        <Button
+          text={"Signup using Email & Password"}
+          onClick={signupUsingEmailPass}
+          blue={false}
+        />
+        <p className="input-para">or</p>
+        <Button
+          text={"Signup using Google"}
+          onClick={signupUsingEmailPass}
+          blue={true}
+        />
+        <p onClick={()=>alert('show login page')} className="input-para acc">
+          Alredy have an Account? <span className="special">Click here</span>
+        </p>
       </form>
-      
     </div>
   );
 };
