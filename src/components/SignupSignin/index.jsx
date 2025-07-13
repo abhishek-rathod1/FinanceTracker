@@ -1,7 +1,10 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import "./styles.css";
 import InputComponent from "../Input";
 import Button from "../Button";
+import { toast } from "react-toastify";
+import { auth } from "../../firebase";
 
 const SignupSigninComponent = () => {
   const [name, setName] = useState("");
@@ -9,8 +12,37 @@ const SignupSigninComponent = () => {
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
 
-  function signupUsingEmailPass() {
-    alert("signup email pass");
+  function signupWithEmail() {
+    // alert("signup email pass");
+    console.log(name);
+    console.log(email);
+    console.log(password);
+    console.log(cnfPassword);
+
+    //check all conditions of inputs
+    if (name != "" && email != "" && password != "" && cnfPassword != "") {
+      //firebase code
+      if (password == cnfPassword) {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            // ...
+            console.log("user>>", user);
+            toast.success("User created successfully");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            toast.error(errorMessage);
+          });
+      } else {
+        toast.error("All fields required");
+      }
+    } else {
+      toast.error("Password and Confirm Password does not match");
+    }
   }
   function signupUsingGoogle() {
     alert("signup Google");
@@ -52,16 +84,16 @@ const SignupSigninComponent = () => {
         />
         <Button
           text={"Signup using Email & Password"}
-          onClick={signupUsingEmailPass}
+          onClick={signupWithEmail}
           blue={false}
         />
         <p className="input-para">or</p>
         <Button
           text={"Signup using Google"}
-          onClick={signupUsingEmailPass}
+          onClick={signupUsingGoogle}
           blue={true}
         />
-        <p onClick={()=>alert('show login page')} className="input-para acc">
+        <p onClick={() => alert("show login page")} className="input-para acc">
           Alredy have an Account? <span className="special">Click here</span>
         </p>
       </form>
