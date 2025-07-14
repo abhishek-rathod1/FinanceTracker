@@ -126,6 +126,7 @@ const SignupSigninComponent = () => {
     }
   }
   async function createDoc(user) {
+    setLoading(true);
     // make sure that the doc whith the uid doesn't exist
     // create doc.
 
@@ -137,16 +138,19 @@ const SignupSigninComponent = () => {
       try {
         await setDoc(doc(db, "users", user.uid), {
           name: user.displayName ? user.displayName : name,
-          email,
+          email: user.email,
           photoURL: user.photoURL ? user.photoURL : "",
           createdAt: new Date(),
         });
         toast.success("doc created!!");
+        setLoading(false);
       } catch (e) {
         toast.error("e.message");
+        setLoading(false)
       }
     } else {
-      toast.error("Doc alredy exists!!");
+      // toast.error("Doc alredy exists!!");
+      setLoading(false);
     }
   }
 
