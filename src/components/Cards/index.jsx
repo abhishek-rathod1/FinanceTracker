@@ -2,16 +2,22 @@ import React from "react";
 import "./styles.css";
 import { Card, Row } from "antd";
 import Button from "../Button";
-const Cards = ({ showExpenseModal, showIncomeModal }) => {
+const Cards = ({
+  showExpenseModal,
+  showIncomeModal,
+  income,
+  expense,
+  currentBalance,
+}) => {
   return (
     <div>
       <Row className="my-row">
         <Card className="my-card" title="Current Balance">
-          <p>₹0</p>
+          <p>₹{currentBalance}</p>
           <Button text={"Reset Balance"} blue={true}></Button>
         </Card>
         <Card className="my-card" title="Add Income">
-          <p>₹0</p>
+          <p>₹{income}</p>
           <Button
             text={"Add Income"}
             blue={true}
@@ -19,7 +25,7 @@ const Cards = ({ showExpenseModal, showIncomeModal }) => {
           ></Button>
         </Card>
         <Card className="my-card" title="Add Expense">
-          <p>₹0</p>
+          <p>₹{expense}</p>
           <Button
             text={"Add Expense"}
             blue={true}

@@ -66,6 +66,12 @@ const Dashboard = () => {
       toast.error(e.message);
     }
   }
+
+  //update balance
+  useEffect(() => {
+    calculateBalance();
+  }, [transactions]);
+
   const calculateBalance = () => {
     let incomeTotal = 0;
     let expenseTotal = 0;
@@ -97,8 +103,8 @@ const Dashboard = () => {
         transactionsArray.push(doc.data());
       });
       setTransactions(transactionsArray);
-      console.log('Transactions: ', transactionsArray)
-      console.log('current bal', currentBalance)
+      console.log("Transactions: ", transactionsArray);
+      console.log("current bal", currentBalance);
       toast.success("Transactions Fetched");
     }
     setLoading(false);
@@ -112,9 +118,12 @@ const Dashboard = () => {
       ) : (
         <>
           <Cards
+            income={income}
+            expense={expense}
+            currentBalance={currentBalance}
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
-            currentBalance={currentBalance}
+            
           />
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
