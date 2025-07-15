@@ -1,0 +1,49 @@
+.transaction-container{
+  padding: 0 2rem;
+}
+.search-row-container{
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  /* padding: 2rem; */
+}
+
+.input-flex{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+  padding: 0rem 0.5rem;
+}
+
+.input-flex input{
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+
+}
+
+.input-flex input:focus{
+  outline: none;
+}
+
+.select-input{
+  width: 15rem;
+  padding: 0 2rem;
+  
+}
+
+.sort-row-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 0 2rem; */
+}
+
+.export-btns{
+  display: flex;
+  gap: 2rem;
+}

@@ -8,10 +8,15 @@ import { addDoc, collection, getDocs, query } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
-import moment from "moment";
+import TransactionTable from "../components/TransactionsTable";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+  if (!user) {
+    navigate("/");
+  }
   const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
 
@@ -40,7 +45,7 @@ const Dashboard = () => {
 
     const newTransaction = {
       type: type,
-      date: moment(values.data).format("YYYY-MM-DD"),
+      date: values.date.format("YYYY-MM-DD"),
       amount: parseInt(values.amount),
       tag: values.tag,
       name: values.name,
@@ -91,7 +96,7 @@ const Dashboard = () => {
   useEffect(() => {
     //get all docs from collection
     fetchTransaction();
-  }, []);
+  }, [user]);
 
   async function fetchTransaction() {
     setLoading(true);
@@ -123,7 +128,6 @@ const Dashboard = () => {
             currentBalance={currentBalance}
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
-            
           />
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
@@ -135,6 +139,7 @@ const Dashboard = () => {
             handleIncomeModalCancel={handleIncomeModalCancel}
             onFinish={onFinish}
           />
+          <TransactionTable transactions={transactions} />
         </>
       )}
     </div>

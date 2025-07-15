@@ -8,6 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1000;
 }
 
 .heading{
@@ -15,7 +16,16 @@
     font-size: 1.2rem;
     font-weight: 600;
 }
-
+.profile-container{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.profile-icon{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;    
+}
 .link{
     opacity: 0.8;
     cursor: pointer;
@@ -23,5 +33,9 @@
 
 .link:hover{
     opacity: 1;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s;
+}
+
+.logout{
+    color: var(--white);
 }
