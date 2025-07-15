@@ -36,7 +36,7 @@ const Header = () => {
   }
   return (
     <div className="navbar">
-      <p className="heading">FinanceTracker</p>
+      <p className="heading">MoneyDiary</p>
 
       {user && (
         <div className="profile-container">

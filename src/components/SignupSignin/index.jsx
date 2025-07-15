@@ -161,7 +161,7 @@ const SignupSigninComponent = () => {
           {/* login form */}
           <div className="signup-wrapper">
             <h2 className="title">
-              Log in to <span className="special">Finance Tracker</span>
+              Log in to <span className="special">Money Diary</span>
             </h2>
             <form>
               <InputComponent
@@ -203,7 +203,7 @@ const SignupSigninComponent = () => {
         // signup form
         <div className="signup-wrapper">
           <h2 className="title">
-            Sign Up on <span className="special">Finance Tracker</span>
+            Sign Up on <span className="special">Money Diary</span>
           </h2>
           <form>
             <InputComponent
