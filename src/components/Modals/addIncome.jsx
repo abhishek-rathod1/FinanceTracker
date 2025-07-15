@@ -1,6 +1,5 @@
 import { Form, Modal, Input, DatePicker, Select, Button } from "antd";
 import React from "react";
-
 const AddIncomeModal = ({
   isIncomeModalVisible,
   handleIncomeModalCancel,

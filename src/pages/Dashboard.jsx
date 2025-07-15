@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import TransactionTable from "../components/TransactionsTable";
 import { useNavigate } from "react-router-dom";
+import ChartComponent from "../components/Charts";
+import NoTransactions from "../components/NoTransactions";
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
@@ -58,7 +60,7 @@ const Dashboard = () => {
     calculateBalance();
   };
 
-  async function addTransaction(transaction) {
+  async function addTransaction(transaction, many) {
     // Add the doc
     try {
       const docRef = await addDoc(
@@ -66,9 +68,9 @@ const Dashboard = () => {
         transaction
       );
       console.log("Document written with ID: ", docRef.id);
-      toast.success("Transaction Added!");
+      if (!many) toast.success("Transaction Added!");
     } catch (e) {
-      toast.error(e.message);
+      if (!many) toast.error(e.message);
     }
   }
 
@@ -115,6 +117,10 @@ const Dashboard = () => {
     setLoading(false);
   }
 
+  let sortedTransactions = transactions.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
   return (
     <div>
       <Header />
@@ -139,7 +145,13 @@ const Dashboard = () => {
             handleIncomeModalCancel={handleIncomeModalCancel}
             onFinish={onFinish}
           />
-          <TransactionTable transactions={transactions} />
+          {/* If there are no transaction show no transaction component, else show charts */}
+          {transactions.length === 0 ? <NoTransactions /> : <ChartComponent sortedTransactions={sortedTransactions}/>}
+          <TransactionTable
+            transactions={transactions}
+            addTransaction={addTransaction}
+            fetchTransaction={fetchTransaction}
+          />
         </>
       )}
     </div>

@@ -16,7 +16,7 @@ const Cards = ({
           <p>₹{currentBalance}</p>
           <Button text={"Reset Balance"} blue={true}></Button>
         </Card>
-        <Card className="my-card" title="Add Income">
+        <Card className="my-card" title="Total Income">
           <p>₹{income}</p>
           <Button
             text={"Add Income"}
@@ -24,7 +24,7 @@ const Cards = ({
             onClick={showIncomeModal}
           ></Button>
         </Card>
-        <Card className="my-card" title="Add Expense">
+        <Card className="my-card" title="Total Expense">
           <p>₹{expense}</p>
           <Button
             text={"Add Expense"}

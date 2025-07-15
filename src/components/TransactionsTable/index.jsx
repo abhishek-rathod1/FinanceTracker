@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import searchIcon from "../../assets/searchIcon.svg";
 import "./styles.css";
 import Button from "../Button";
-const TransactionTable = ({ transactions }) => {
+import { parse, unparse } from "papaparse";
+import { toast } from "react-toastify";
+
+const TransactionTable = ({
+  transactions,
+  addTransaction,
+  fetchTransaction,
+}) => {
   const { Option } = Select;
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -50,6 +57,45 @@ const TransactionTable = ({ transactions }) => {
       return 0;
     }
   });
+
+  function exportCSV() {
+    var csv = unparse(transactions, {
+      fields: ["Name", "Type", "Tag", "Date", "Amount"],
+    });
+    var data = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    var csvURL = window.URL.createObjectURL(data);
+    const tempLink = document.createElement("a");
+    tempLink.href = csvURL;
+    tempLink.setAttribute("download", "transactions.csv");
+    tempLink.click();
+  }
+
+  function importCSV(e) {
+    e.preventDefault();
+    try {
+      parse(e.target.files[0], {
+        header: true,
+        complete: async function (results) {
+          console.log("Results>>>", results);
+          for (const transaction of results.data) {
+            //write each transaction of firebase, you can use the addTransaction function here
+            console.log("Transaction", transaction);
+            const newTransaction = {
+              ...transaction,
+              amount: parseFloat(transaction.amount),
+            };
+            await addTransaction(newTransaction, true);
+          }
+        },
+      });
+      toast.success("All transactions Added");
+      fetchTransaction();
+      e.target.files = null;
+    } catch (e) {
+      toast.error(e.message);
+    }
+  }
+
   return (
     <div className="transaction-container">
       <div className="search-row-container">
@@ -87,11 +133,22 @@ const TransactionTable = ({ transactions }) => {
           <Radio.Button value={"amount"}>Sort by Amount</Radio.Button>
         </Radio.Group>
         <div className="export-btns">
-          <Button text="Export to CSV" />
-          <Button text="Import from CSV" blue={true} />
+          <Button text="Export to CSV" onClick={exportCSV} />
+
+          <label htmlFor="file-csv" className="btn btn-blue">
+            Import from CSV
+          </label>
+          <input
+            id="file-csv"
+            type="file"
+            accept=".csv"
+            required
+            onChange={importCSV}
+            style={{ display: "none" }}
+          />
         </div>
       </div>
-      
+
       <Table dataSource={sortedTransaction} columns={columns}></Table>
     </div>
   );
